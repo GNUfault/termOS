@@ -20,7 +20,7 @@ KERNEL_VER=$(uname -r)
 
 # grub menuentry template
 ENTRY="menuentry \"termOS\" {
-    linux /boot/vmlinuz-${KERNEL_VER} root=${ROOT_PART} rw init=${TERMOS_PATH} video=HDMI-1:1920x1080@60
+    linux /boot/vmlinuz-${KERNEL_VER} root=${ROOT_PART} rw init=${TERMOS_PATH}
     initrd /boot/initrd.img-${KERNEL_VER}
 }"
 
