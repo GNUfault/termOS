@@ -4,21 +4,13 @@
 # get the directory of this script
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-# termOS binary path
-TERMOS_PATH="${SCRIPT_DIR}/termOS"
-
-if [[ ! -f "$TERMOS_PATH" ]]; then
-    echo "termOS binary not found at $TERMOS_PATH"
-    exit 1
-fi
-
 # detect root partition
 ROOT_PART=$(df / | tail -1 | awk '{print $1}')
 
 # grub menuentry template
 ENTRY="menuentry \"termOS\" {
-    linux ${SCRIPT_DIR}/vmlinuz-6.14.0-37-generic root=${ROOT_PART} rw init=${TERMOS_PATH}
-    initrd ${SCRIPT_DIR}/initrd.img-6.14.0-37-generic
+    linux /vmlinuz-6.14.0-37-generic root=/dev/termOSloop ro init=/termOS
+    initrd /initrd.img-6.14.0-37-generic
 }"
 
 # write to /etc/grub.d/42_termOS
@@ -28,4 +20,13 @@ sudo chmod +x /etc/grub.d/42_termOS
 # regenerate grub.cfg
 sudo update-grub
 
-echo "termOS menu entry installed! Reboot and select 'termOS' in grub."
+dd if=/dev/zero of=$SCRIPT_DIR/termOS.img bs=1M count=1024   # 1GB
+LOOP_DEV=$(sudo losetup -f --show $SCRIPT_DIR/termOS.img)
+
+sudo mkfs.ext4 $LOOP_DEV
+mount $LOOP_DEV /mnt/
+
+sudo cp -r $SCRIPT_DIR/* /mnt/
+sudo umount /mnt/
+
+echo "termOS installed! Reboot and select 'termOS' in grub."

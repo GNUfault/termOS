@@ -43,7 +43,7 @@ int main() {
       pid_t pid = fork();
 
 			if (pid == 0) {
-				execl("./sbin/sh", "sh", NULL);
+				execl(execPath, "sh", arg2, NULL);
 				putsc("execution failed.\n", 255, 255, 0);
 				continue;
 			}
