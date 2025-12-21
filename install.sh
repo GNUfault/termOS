@@ -17,7 +17,7 @@ ROOT_PART=$(df / | tail -1 | awk '{print $1}')
 
 # grub menuentry template
 ENTRY="menuentry \"termOS\" {
-    linux ${SCRIPT_DIR}/vmlinuz-6.14.0-37-generic root=${ROOT_PART} ro init=${TERMOS_PATH}
+    linux ${SCRIPT_DIR}/vmlinuz-6.14.0-37-generic root=${ROOT_PART} rw init=${TERMOS_PATH}
     initrd ${SCRIPT_DIR}/initrd.img-6.14.0-37-generic
 }"
 

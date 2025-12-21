@@ -30,7 +30,7 @@ sudo mount "$DEV" "$MNT"
 
 # copy termOS files
 echo "Copying termOS files..."
-# assumes this script is in the parent of termOS directory
+# assumes this script is in termOS directory
 sudo cp -r ./* "$MNT/"
 
 # fix ownership so user can write without sudo
@@ -43,12 +43,12 @@ sudo umount "$MNT"
 # grub menuentry template
 ENTRY="menuentry \"termOS\" {
     set root=(hd${CONTROLLER},${PARTITION})
-    linux /vmlinuz-6.14.0-37-generic root=${ROOT_PART} ro init=/_/termOS
+    linux /vmlinuz-6.14.0-37-generic rw init=/termOS
     initrd /initrd.img-6.14.0-37-generic
 }"
 
 # write to /etc/grub.d/42_termOS
-echo "$ENTRY" | sudo tee /etc/grub.d/42_termOS > /dev/null
+sudo bash -c "echo \"$ENTRY\" > /etc/grub.d/42_termOS"
 sudo chmod +x /etc/grub.d/42_termOS
 
 # regenerate grub.cfg
