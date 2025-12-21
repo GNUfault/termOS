@@ -3,6 +3,8 @@
 
 set -e
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 # prompt for NVMe drive details
 read -p "NVMe controller number (X in /dev/nvmeXnYpZ)? " CONTROLLER
 read -p "NVMe namespace number (usually 1) (Y in /dev/nvmeXnYpZ)? " NAMESPACE
@@ -31,7 +33,7 @@ sudo mount "$DEV" "$MNT"
 # copy termOS files
 echo "Copying termOS files..."
 # assumes this script is in termOS directory
-sudo cp -r ./* "$MNT/"
+sudo cp -r $SCRIPT_DIR/* "$MNT/"
 
 # fix ownership so user can write without sudo
 sudo chown -R $USER:$USER "$MNT"

@@ -5,7 +5,7 @@
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # termOS binary path
-TERMOS_PATH="${SCRIPT_DIR}/_/termOS"
+TERMOS_PATH="${SCRIPT_DIR}/termOS"
 
 if [[ ! -f "$TERMOS_PATH" ]]; then
     echo "termOS binary not found at $TERMOS_PATH"
