@@ -12,9 +12,9 @@ start_real:
 	mov ds, ax
 	mov es, ax
 	
-	; load stage2: 4 sectors -> 0x7e00
+	; load stage2: 8 sectors -> 0x7e00
 	mov ah, 0x02        ; int 13h read
-	mov al, 4           ; sectors
+	mov al, 8           ; sectors
 	mov ch, 0           ; cylinder
 	mov cl, 2           ; sector (starts at 1, boot = 1)
 	mov dh, 0           ; head
